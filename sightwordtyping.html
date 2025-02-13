@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safari Animal Typing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            background-image: url('https://i.imgur.com/qyGkLhR.jpg'); /* Safari background */
+            background-size: cover;
+            background-position: center;
+        }
+        h1 {
+            color: #4a752c;
+        }
+        .game-container {
+            background: rgba(255, 255, 255, 0.8);
+            display: inline-block;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+        .word {
+            font-size: 40px;
+            font-weight: bold;
+            color: #d35400;
+        }
+        input {
+            font-size: 24px;
+            padding: 10px;
+            text-align: center;
+            width: 200px;
+            border: 2px solid #4a752c;
+            border-radius: 5px;
+        }
+        .score {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        .animal {
+            font-size: 50px;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Safari Animal Typing Game</h1>
+    <div class="game-container">
+        <div class="word" id="wordDisplay">Loading...</div>
+        <input type="text" id="wordInput" placeholder="Type here..." autofocus>
+        <div class="score">Score: <span id="score">0</span></div>
+        <div class="animal" id="animalEmoji">🦁</div>
+    </div>
+
+    <script>
+        const words = [
+            "the", "of", "and", "a", "to", "in", "is", "you", "that", "it",
+            "he", "was", "for", "on", "are", "as", "with", "his", "they", "I",
+            "at", "be", "this", "have", "from", "or", "one", "had", "by", "words",
+            "but", "not", "what", "all", "were", "we", "when", "your", "can", "said",
+            "there", "use", "an", "each", "which", "she", "do", "how", "their", "if",
+            "will", "up", "other", "about", "out", "many", "then", "them", "these", "so",
+            "some", "her", "would", "make", "like", "him", "into", "time", "has", "look",
+            "two", "more", "write", "go", "see", "number", "no", "way", "could", "people",
+            "my", "than", "first", "water", "been", "called", "who", "am", "its", "now",
+            "find", "long", "down", "day", "did", "get", "come", "made", "may", "part"
+        ];
+
+        const animals = ["🦁", "🐘", "🦒", "🦓", "🐆", "🐊", "🦏", "🐒"];
+        let currentWord = "";
+        let score = 0;
+
+        const wordDisplay = document.getElementById("wordDisplay");
+        const wordInput = document.getElementById("wordInput");
+        const scoreDisplay = document.getElementById("score");
+        const animalEmoji = document.getElementById("animalEmoji");
+
+        function getRandomWord() {
+            return words[Math.floor(Math.random() * words.length)];
+        }
+
+        function getRandomAnimal() {
+            return animals[Math.floor(Math.random() * animals.length)];
+        }
+
+        function newWord() {
+            currentWord = getRandomWord();
+            wordDisplay.textContent = currentWord;
+            wordInput.value = "";
+            animalEmoji.textContent = getRandomAnimal();
+        }
+
+        wordInput.addEventListener("input", function() {
+            if (wordInput.value === currentWord) {
+                wordDisplay.classList.add("correct");
+                setTimeout(() => {
+                    wordDisplay.classList.remove("correct");
+                    score++;
+                    scoreDisplay.textContent = score;
+                    newWord();
+                }, 200);
+            } else if (currentWord.startsWith(wordInput.value)) {
+                wordDisplay.classList.remove("incorrect");
+            } else {
+                wordDisplay.classList.add("incorrect");
+            }
+        });
+
+        newWord();
+    </script>
+
+</body>
+</html>
